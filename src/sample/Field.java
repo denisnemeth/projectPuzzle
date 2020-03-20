@@ -16,23 +16,28 @@ public class Field {
                 arr[i][j] = new Tile();
             }
         }
+        arr[3][3].setValue(false);
     }
     public boolean isWinner() {
-        if (arr[4][4].isValue()) return true;
-        else return false;
+        if (arr[3][3].isValue()) return false;
+        else return true;
     }
-    public void toggleTile1(int code) {
-        int x = code%arr.length, y = code/arr.length;
+    public void switchTiles(int code) {
+        int x = (code-1)%arr.length, y = (code-1)/arr.length;
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                if ((x+i >= 0 && x+i < arr.length) && (y+j >= 0 && y+j < arr.length) && !(i == 0 && j == 0)) arr[x+i][y+j].toggle();
+                if ((x+i >= 0 && x+i < arr.length) && (y+j >= 0 && y+j < arr.length) && !(i == 0 && j == 0) && !arr[x][y].isValue()) {
+                    arr[x+i][y+j].toggle();
+                }
             }
         }
+        arr[x][y].toggle();
+        print();
     }
     public void print () {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
-                System.out.print(arr[i][j].isValue() ? " X " : " O ");
+                System.out.print(arr[i][j].isValue() ? " true  " : " false ");
             }
             System.out.println();
         }
@@ -41,7 +46,7 @@ public class Field {
     public void shuffle() {
         Random rnd = new Random();
         do {
-            for (int i = 0; i < 50; i++) toggleTile1(rnd.nextInt(15));
-        } while (isWinner());
+            for (int i = 0; i < 50; i++) switchTiles(rnd.nextInt(15));
+        } while (!isWinner());
     }
 }

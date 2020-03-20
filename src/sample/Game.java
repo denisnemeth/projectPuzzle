@@ -13,7 +13,7 @@ public class Game {
         if (state == READY) {
             state = State.RUNNING;
             field = new Field();
-            field.shuffle();
+            //field.shuffle();
         }
     }
     public void endGame() {
@@ -30,8 +30,8 @@ public class Game {
     }
     public void nextMove(int code) {
         if (state == RUNNING) {
-            if (field.isWinner()) endGame();
-            else field.toggleTile1(code);
+            //if (field.isWinner()) endGame();
+            field.switchTiles(code);
         }
     }
     public Field getField() {
